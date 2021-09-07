@@ -183,11 +183,11 @@
 
 <script>
 import axios from "axios";
-const url = "http://localhost:7000/?option=";
+const url = "http://localhost:7000/";
 export default {
   data() {
     return {
-      src: "http://localhost:9000/public/uploads/",
+      src: url + "public/uploads/",
       listPersons: [],
       url: null,
     };
@@ -217,7 +217,7 @@ export default {
     },
     listData() {
       axios
-        .get(url + "GET")
+        .get(url + "?option=GET")
         .then((res) => {
           this.listPersons = res.data;
         })
@@ -243,13 +243,13 @@ export default {
           this.updateData(params);
         }
       } else {
-        alert("Dni solo debe tener numeros del 0 - 9");
+        alert("DNI must only have numbers from 0 - 9");
         document.getElementById("dni").focus();
       }
     },
     saveData(params) {
       axios
-        .post(url + "POST", params)
+        .post(url + "?option=POST", params)
         .then((res) => {
           if (res.data === "DNI is already taken") {
             alert(res.data);
@@ -269,7 +269,7 @@ export default {
     },
     updateData(params) {
       axios
-        .post(url + "PUT", params)
+        .post(url + "?option=PUT", params)
         .then((res) => {
           if (res.data === "DNI is already taken") {
             alert(res.data);
@@ -301,7 +301,7 @@ export default {
       if (data.status === "A") {
         if (confirm("Do you want to delete this record?")) {
           axios
-            .post(url + "DELETE", params)
+            .post(url + "?option=DELETE", params)
             .then(() => {
               alert("Deleted data");
               this.listData();
@@ -316,7 +316,7 @@ export default {
     },
     reset() {
       this.url = null;
-      document.getElementById("id").value = ""
+      document.getElementById("id").value = "";
       document.getElementById("formData").reset();
     },
   },
